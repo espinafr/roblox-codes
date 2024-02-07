@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block additional_styles %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 60%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<body>
+    <form method="post" action="{{ url_for('adminpost') }}">
+        <div>
+            <label for="tipo">Tipo:</label>
+            <select name="tipo">
+              <option value="dinheiro">Dinheiro</option>
+              <option value="item">Item</option>
+              <option value="double">Dinheiro em dobro</option>
+            </select>
+        </div>
+        <div>
+            <label for="codigo">Código:</label> 
+            <input type="text" name="codigo" required>
+        </div>
+        <div>
+            <label for="num">Número:</label>
+            <input type="number" name="num" required>
+        </div>
+        <div>
+            <label for="exp">Expiração:</label>
+            <input type="date" name="exp">
+        </div>
+        <button type="submit">Entrar</button>
+    </form>
+    <table>
+        <tr>
+          <th>ID</th>
+          <th>Código</th>
+          <th>Tipo</th>
+          <th>Número</th>
+          <th>Expiração</th>
+          <th>Extra</th>
+        </tr>
+        {% for cod in codigos %}
+        <tr>
+            <td>{{ cod[0] }}</td>
+            <td>{{ cod[1] }}</td>
+            <td>{{ cod[2] }}</td>
+            <td>{{ cod[3] }}</td>
+            <td>{{ cod[4] }}</td>
+            <td>
+                <form class="delete" method="post" action="{{ url_for('admindelete', codid=cod[0]) }}">
+                    <button type="submit">Remover</button>
+                </form>
+            </td>
+        </tr>
+        {%endfor%}
+    </ul>
+</body>
+{% endblock %}
